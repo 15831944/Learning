@@ -1,0 +1,1 @@
+C:\Workspace\Coding\StarkLearning\CSharp\OfficeInterop\Excel\L01_Basic_Operation\bin\Debug\L01_Basic_Operation.exe.config

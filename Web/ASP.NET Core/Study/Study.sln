@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC63EA50-0ED8-4718-950F-84E09760F53B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{79D37922-04A5-4108-A0E1-2F742580E0E0}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "L02_Hello_Web_Api", "src\L02_Hello_Web_Api\L02_Hello_Web_Api.xproj", "{BD103262-7256-4150-A425-56CCDF785906}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "L01_Hello_Asp_Net_Core", "src\L01_Hello_Asp_Net_Core\L01_Hello_Asp_Net_Core.xproj", "{6ED3B05B-3F90-47FB-9F83-361EC717FB71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD103262-7256-4150-A425-56CCDF785906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD103262-7256-4150-A425-56CCDF785906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD103262-7256-4150-A425-56CCDF785906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD103262-7256-4150-A425-56CCDF785906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ED3B05B-3F90-47FB-9F83-361EC717FB71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED3B05B-3F90-47FB-9F83-361EC717FB71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED3B05B-3F90-47FB-9F83-361EC717FB71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED3B05B-3F90-47FB-9F83-361EC717FB71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD103262-7256-4150-A425-56CCDF785906} = {BC63EA50-0ED8-4718-950F-84E09760F53B}
+		{6ED3B05B-3F90-47FB-9F83-361EC717FB71} = {BC63EA50-0ED8-4718-950F-84E09760F53B}
+	EndGlobalSection
+EndGlobal
