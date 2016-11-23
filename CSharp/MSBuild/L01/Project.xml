@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<CSFile Include="Project.cs"/>
+	</ItemGroup>
+	<Target Name="build">
+		<Csc Sources="@(CSFile)" TargetType="exe">
+			<Output TaskParameter="OutputAssembly" PropertyName="outputExeFileName"/>
+		</Csc>
+		<Message Text="$(outputExeFileName)"/>
+		<Exec Command="$(outputExeFileName)"/>
+	</Target>
+</Project>

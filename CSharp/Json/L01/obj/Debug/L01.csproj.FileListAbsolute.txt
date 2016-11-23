@@ -1,0 +1,8 @@
+C:\Workspace\Coding\Learning\CSharp\Json\L01\bin\Debug\L01.exe.config
+C:\Workspace\Coding\Learning\CSharp\Json\L01\bin\Debug\L01.exe
+C:\Workspace\Coding\Learning\CSharp\Json\L01\bin\Debug\L01.pdb
+C:\Workspace\Coding\Learning\CSharp\Json\L01\bin\Debug\Newtonsoft.Json.dll
+C:\Workspace\Coding\Learning\CSharp\Json\L01\bin\Debug\Newtonsoft.Json.xml
+C:\Workspace\Coding\Learning\CSharp\Json\L01\obj\Debug\L01.csprojResolveAssemblyReference.cache
+C:\Workspace\Coding\Learning\CSharp\Json\L01\obj\Debug\L01.exe
+C:\Workspace\Coding\Learning\CSharp\Json\L01\obj\Debug\L01.pdb
