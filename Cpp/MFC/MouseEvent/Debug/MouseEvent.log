@@ -1,2 +1,7 @@
-﻿  MouseEvent.vcxproj -> C:\Workspace\Coding\Learning\Cpp\MFC\Debug\MouseEvent.exe
-  MouseEvent.vcxproj -> C:\Workspace\Coding\Learning\Cpp\MFC\Debug\MouseEvent.pdb (Partial PDB)
+﻿  stdafx.cpp
+  MouseEventDlg.cpp
+  MouseEvent.cpp
+  正在生成代码...
+  LINK : 没有找到 E:\Coding\Learning\Cpp\MFC\Debug\MouseEvent.exe 或上一个增量链接没有生成它；正在执行完全链接
+  MouseEvent.vcxproj -> E:\Coding\Learning\Cpp\MFC\Debug\MouseEvent.exe
+  MouseEvent.vcxproj -> E:\Coding\Learning\Cpp\MFC\Debug\MouseEvent.pdb (Partial PDB)

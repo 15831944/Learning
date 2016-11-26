@@ -1,0 +1,8 @@
+<!--index.wxml-->
+<view>
+  <view>
+    <text>欧阳皇家牧羊犬</text>
+    <text>{{motto}}</text>
+  </view>
+  <button type="default" bindtap="click" size="{{defaultSize}}">I am a button</button>
+</view>
