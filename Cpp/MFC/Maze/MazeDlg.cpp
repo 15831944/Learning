@@ -77,7 +77,6 @@ BEGIN_MESSAGE_MAP(CMazeDlg, CDialogEx)
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
 	ON_BN_CLICKED(IDC_BUTTON2, &CMazeDlg::OnBnClickedButton2)
-	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 
@@ -302,10 +301,12 @@ void CMazeDlg::UpdateBall(int rowMove, int colMove)
 
 			int choice = -1;
 			if (rowIndex == m_rowNumOfBoxes - 1 && colIndex == m_colNumOfBoxes - 1) {
-				choice = MessageBox(TEXT("成功到达目的地，游戏结束！\r\n是否重新开始？"), TEXT("恭喜你"), MB_OKCANCEL);
+				choice = MessageBox(TEXT("成功到达目的地，游戏结束！\r\n是否重新开始？"),
+									TEXT("恭喜你"), MB_OKCANCEL);
 			}
 			else if (!boxes[rowIndex][colIndex].m_isSelected)
-				choice = MessageBox(TEXT("失败，游戏结束！\r\n是否重新开始？"), TEXT("好遗憾"), MB_OKCANCEL);
+				choice = MessageBox(TEXT("失败，游戏结束！\r\n是否重新开始？"),
+									TEXT("好遗憾"), MB_OKCANCEL);
 			if (choice == IDOK) {
 				InitCanvas(); return;
 			}
@@ -313,13 +314,6 @@ void CMazeDlg::UpdateBall(int rowMove, int colMove)
 				exit(-1);
 		}
 	}
-}
-
-void CMazeDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
-{
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	auto a = nChar;
-	CDialogEx::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
 BOOL CMazeDlg::PreTranslateMessage(MSG* pMsg)
