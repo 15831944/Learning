@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+</head>
+<body>
+    <h2>Monaco Stark Editor</h2>
+    <div id="container" style="width:800px;height:600px;border:1px solid grey"></div>
+
+    <script src="../libs/monaco-editor/min/vs/loader.js"></script>
+    <script>
+        require.config({paths: {'vs':'../libs/monaco-editor/min/vs'}});
+        require(['vs/editor/editor.main'], function(){
+            var editor = monaco.editor.create(document.getElementById('container'), {
+                value: ['int main()','{','','}'
+                ].join('\n'),
+                fontFamily : 'Source Code Pro',
+                tabCompletion : true,
+                theme : 'vs-dark',
+                language: 'cpp'
+            });
+        })
+    </script>
+
+</body>
+</html>
