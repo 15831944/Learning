@@ -1,4 +1,34 @@
-﻿<h2>Input @ViewBag.Info</h2>
-<input type="submit" name="name" width="200" value="@ViewBag.Info" />
-@*<a asp-controller="Home" asp-action="index" asp->跳转</a>*@
-@Html.ActionLink("测试","index","Home", new { str = "actionlink" })
+﻿@{ 
+    Layout = "_Section";
+}
+
+<input value="file1" type="button" ondblclick="getFileContent(0)" />
+<input value="file2" type="button" ondblclick="getFileContent(1)" />
+<input value="file3" type="button" ondblclick="getFileContent(2)" />
+<br />
+<textarea id="testDiv" rows="21" cols="50"></textarea>
+
+@section Header{
+    <h5>这是页眉</h5>
+}
+
+@section Footer{
+    版权所有 &copy;Stark.Shang | @DateTime.Now.Year
+}
+
+@section Script{
+    <script>
+        var fileContent = new Array();
+        fileContent[0] = "@ViewBag.Code";
+        fileContent[1] = "文件1";
+        fileContent[2] = "文件2";
+        var prevIndex = -1;
+        function getFileContent(nextIndex) {
+            if (prevIndex != -1) {
+                fileContent[prevIndex] = document.getElementById("testDiv").value;
+            }
+            document.getElementById("testDiv").value = fileContent[nextIndex];
+            prevIndex = nextIndex;
+        }
+    </script>
+}

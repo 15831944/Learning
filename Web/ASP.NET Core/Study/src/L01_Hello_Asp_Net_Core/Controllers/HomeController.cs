@@ -13,7 +13,7 @@ namespace L01_Hello_Asp_Net_Core.Controllers
         // GET: /<controller>/
         public IActionResult Index(string str)
         {
-            ViewBag.Info = str;
+            ViewBag.Code = @"int main()\n{\n\treturn 0;\n}\n";
             return View();
         }
     }

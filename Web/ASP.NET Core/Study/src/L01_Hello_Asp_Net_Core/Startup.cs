@@ -33,7 +33,7 @@ namespace L01_Hello_Asp_Net_Core
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync("From default!");
             });
         }
     }
