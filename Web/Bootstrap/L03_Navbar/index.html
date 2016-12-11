@@ -2,64 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta name="author" content="stark.shang"/>
     <meta name="description" content="This is a navbar demo"/>
 
     <title>Document</title>
     <link rel="stylesheet" href="../Bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../Bootstrap/css/bootstrap-theme.min.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
             <div class="navbar-header">
-                <button class="navbar-toggle" aria-expanded="true" aria-controls="navbar" type="button" data-toggle="collapse" data-target="#navbar">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <h1>Stark</h1>
+                <a class="navbar-brand">Stark</a>
             </div>
-            <div class="navbar-collapse collapse" id="navbar" aria-expanded="false" style="height: 1px">
+            <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li onclick="test()">
-                        <img src="./resource/build.png" alt="build" width="40em" height="40em" />
-                    </li>
-                    <li onclick="test()">
-                        <img src="./resource/run.png" alt="run" width="40em" height="40em" />
-                    </li>
-                    <li onclick="test()">
-                        <img src="./resource/clean.png" alt="clean" width="40em" height="40em" />
-                    </li>
+                    <li><a class="glyphicon glyphicon-fire"></a></li>
+                    <li><a class="glyphicon glyphicon-play"></a></li>
+                    <li><a class="glyphicon glyphicon-trash"></a></li>
+                    <li><a class="glyphicon glyphicon-stats"></a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                </ul>
+            <div class="col-sm-9">
+                <div>
+                    <p>第1题</p>
+                    <p>URL(Uniform Resource Locator:统一资源定位符)是互联网上标准资源的地址，互联网上的每个文件都有一个唯一的URL。但是在进行网络通信时，对于在URL中本身有特定含义的特殊字符，为了避免引起歧义，需要使用转义字符进行替换。例如，用谷歌搜索引擎搜索“C#”时，因为“#”的16进制ASCII码为23，所以在URL中被转义为%23。</p>
+                </div>
+                <div class="embed-responsive embed-responsive-16by9" id="CodeArea" style="height:400px;border:1px solid grey"></div>
             </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header">Dashboard</h1>
+            <!-- File list -->
+            <div class="col-sm-3">
+                <div class="hidden-print hidden-xs affix" role="complementary">
+                    <ul class="nav">
+                        <li>
+                            <label class="glyphicon glyphicon-folder-close hidden-sm">123123</label>
+                            <label class="hidden-sm">123123</label>
+                            <ul class="nav">
+                                <li>123</li>
+                                <li>123</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 
+    <script src="../Bootstrap/js/jquery.min.js"></script>
+    <script src="../Bootstrap/js/bootstrap.min.js"></script>
+    <script src="../monaco-editor/min/vs/loader.js"></script>
     <script>
-        function test()
-        {
-            alert("hello");
-        }
+        require.config({paths: {'vs':'../monaco-editor/min/vs'}});
+        require(['vs/editor/editor.main'], function(){
+            var editor = monaco.editor.create(document.getElementById('CodeArea'), {
+                value: ['int main()','{','','}'
+                ].join('\n'),
+                fontFamily : 'Source Code Pro',
+                tabCompletion : true,
+                theme : 'vs-dark',
+                language: 'cpp'
+            });
+        })
     </script>
 </body>
 

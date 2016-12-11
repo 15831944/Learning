@@ -2,22 +2,47 @@
     Layout = "_Section";
 }
 
+@using System.IO;
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <div>
+                <p>第1题</p>
+                <p>URL(Uniform Resource Locator:统一资源定位符)是互联网上标准资源的地址，互联网上的每个文件都有一个唯一的URL。但是在进行网络通信时，对于在URL中本身有特定含义的特殊字符，为了避免引起歧义，需要使用转义字符进行替换。例如，用谷歌搜索引擎搜索“C#”时，因为“#”的16进制ASCII码为23，所以在URL中被转义为%23。</p>
+            </div>
+            <div id="CodeArea" style="height:400px;border:1px solid grey"></div>
+        </div>
+        <!-- File list -->
+        <div class="col-sm-3">
+            <div class="hidden-print hidden-xs affix" role="complementary">
+                <ul class="nav">
+                    @foreach (var directory in (ViewBag.Path as DirectoryInfo).GetDirectories()) {
+                        <li>
+                            <a ondblclick="alertMessage('@directory.Name')">@directory.Name</a>
+                            <ul class="nav">
+                                @foreach (var file in directory.GetFiles()) {
+                                    <li>@file.Name</li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>  
+
 <input value="file1" type="button" ondblclick="getFileContent(0)" />
 <input value="file2" type="button" ondblclick="getFileContent(1)" />
 <input value="file3" type="button" ondblclick="getFileContent(2)" />
 <br />
 <textarea id="testDiv" rows="21" cols="50"></textarea>
 
-@section Header{
-    <h5>这是页眉</h5>
-}
-
-@section Footer{
-    版权所有 &copy;Stark.Shang | @DateTime.Now.Year
-}
 
 @section Script{
     <script>
+
         var fileContent = new Array();
         fileContent[0] = "@ViewBag.Code";
         fileContent[1] = "文件1";
@@ -29,6 +54,9 @@
             }
             document.getElementById("testDiv").value = fileContent[nextIndex];
             prevIndex = nextIndex;
+        }
+        function alertMessage(name) {
+            alert(name);
         }
     </script>
 }

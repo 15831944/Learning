@@ -28,7 +28,7 @@ namespace L01_Hello_Asp_Net_Core
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) =>
