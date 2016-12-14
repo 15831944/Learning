@@ -7,8 +7,8 @@
 -debug:full
 -nostdlib
 -nologo
-"C:\Workspace\Coding\Web\ASP.NET Core\L01\src\L01\obj\Debug\netcoreapp1.0\dotnet-compile.assemblyinfo.cs"
--out:"C:\Workspace\Coding\Web\ASP.NET Core\L01\src\L01\bin\Debug\netcoreapp1.0\L01.dll"
+"E:\Coding\Learning\Web\ASP.NET Core\L01\src\L01\obj\Debug\netcoreapp1.0\dotnet-compile.assemblyinfo.cs"
+-out:"E:\Coding\Learning\Web\ASP.NET Core\L01\src\L01\bin\Debug\netcoreapp1.0\L01.dll"
 -r:"C:\Users\stark\.nuget\packages\Microsoft.AspNetCore.Antiforgery\1.0.1\lib\netstandard1.3\Microsoft.AspNetCore.Antiforgery.dll"
 -r:"C:\Users\stark\.nuget\packages\Microsoft.AspNetCore.Authorization\1.0.0\lib\netstandard1.3\Microsoft.AspNetCore.Authorization.dll"
 -r:"C:\Users\stark\.nuget\packages\Microsoft.AspNetCore.Cors\1.0.0\lib\netstandard1.3\Microsoft.AspNetCore.Cors.dll"
@@ -161,7 +161,7 @@
 -r:"C:\Users\stark\.nuget\packages\System.Threading.Timer\4.0.1\ref\netstandard1.2\System.Threading.Timer.dll"
 -r:"C:\Users\stark\.nuget\packages\System.Xml.ReaderWriter\4.0.11\ref\netstandard1.3\System.Xml.ReaderWriter.dll"
 -r:"C:\Users\stark\.nuget\packages\System.Xml.XDocument\4.0.11\ref\netstandard1.3\System.Xml.XDocument.dll"
--resource:"C:\Workspace\Coding\Web\ASP.NET Core\L01\src\L01\obj\Debug\netcoreapp1.0\L01dotnet-compile.deps.json",L01.deps.json
-"C:\Workspace\Coding\Web\ASP.NET Core\L01\src\L01\Program.cs"
-"C:\Workspace\Coding\Web\ASP.NET Core\L01\src\L01\Startup.cs"
-"C:\Workspace\Coding\Web\ASP.NET Core\L01\src\L01\Controllers\HomeController.cs"
+-resource:"E:\Coding\Learning\Web\ASP.NET Core\L01\src\L01\obj\Debug\netcoreapp1.0\L01dotnet-compile.deps.json",L01.deps.json
+"E:\Coding\Learning\Web\ASP.NET Core\L01\src\L01\Program.cs"
+"E:\Coding\Learning\Web\ASP.NET Core\L01\src\L01\Startup.cs"
+"E:\Coding\Learning\Web\ASP.NET Core\L01\src\L01\Controllers\HomeController.cs"
