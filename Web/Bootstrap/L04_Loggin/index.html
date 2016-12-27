@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="../Bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../Bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../Font-Awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./myCss.css">
+</head>
+<body>
+
+<div class="container">
+<div class="row">
+<div class="container text-center col-sm-6">
+    <h1 class="font-large font-while center-block">C++程序</h1>
+    <h1 class="font-large font-while center-block">设计与实践</h1>
+</div>
+<div class="col-lg-4 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
+<form role="form">
+    <div class="from-group input-group input-group-lg margin-bottom-sm">
+        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+        <input type="text" class="form-control" placeholder="user name">
+    </div>
+    <div class="from-group input-group input-group-lg margin-bottom-sm">
+        <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+        <input type="password" class="form-control" placeholder="password">
+    </div>
+    <div class="from-group input-group input-group-lg margin-bottom-sm">
+        <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+        <input type="email" class="form-control" placeholder="example@sjtu.edu.cn">
+    </div>
+    <div class="form-group" id="SubmitControl">
+        <button class="btn btn-default col-lg-12 col-md-12 col-sm-12 col-xs-12" type="submit">登陆</button>
+    </div>
+</form>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <a href="#" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left font-while">忘记密码</a>
+    <a href="javascript:void(0)" onclick="login()" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right font-while">没有账号？</a>
+</div>
+
+</div>
+
+<div class="clearfix"></div>
+</div>
+</div>
+
+
+<div id="signupblock" class="container signupblock">
+    <div class="row" style="height: 100%">
+        <div class="col-lg-4 col-md-3 col-sm-1 col-xs-12"></div>
+        <div class="col-lg-4 col-md-6 col-sm-10 col-xs-12 block">
+            <form class="col-lg-12 center-block">
+                <div class="from-group input-group input-group-lg input-group-item-lg">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <input type="text" class="form-control" placeholder="user name">
+                </div>
+                <div class="from-group input-group input-group-lg input-group-item-lg">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                    <input type="password" class="form-control" placeholder="password">
+                </div>
+                <div class="from-group input-group input-group-lg input-group-item-lg">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                    <input type="password" class="form-control" placeholder="password confirm">
+                </div>
+                <div class="from-group input-group input-group-lg input-group-item-lg">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                    <input type="email" class="form-control" placeholder="example@sjtu.edu.cn">
+                </div>
+                <div class="form-group input-group input-group-lg input-group-item-lg">
+                    <button class="btn btn-default col-lg-5 col-md-5 col-sm-5 col-xs-5" type="submit">登陆</button>
+                    <button class="btn btn-default col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-xs-5 col-xs-offset-2" onclick="cancel()">取消</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-4 col-md-3 col-sm-1 col-xs-12"></div>
+    </div>
+</div>
+
+<div id="mask" class="mask"></div>
+
+
+<script src="javascript.js" type="text/javascript"></script>
+</body>
+
+</html>
