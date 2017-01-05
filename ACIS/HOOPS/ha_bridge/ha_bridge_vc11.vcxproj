@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{193AAECF-8372-46B3-8F91-833AE90F2114}</ProjectGuid>
+    <RootNamespace>HA_bridge</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(A3DT)\NT_VC11_DLLD\code\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\NT_VC11_DLLD\code\bin\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(A3DT)\NT_VC11_DLL\code\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\NT_VC11_DLL\code\bin\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\NT_VC11_DLLD\code\bin\ha_bridged.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(HOOPS_INSTALL_DIR)/Dev_Tools/hoops_3dgs/source;$(HOOPS_INSTALL_DIR)/Dev_Tools/hoops_3dgs/include;$(A3DT)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ANSI;_WINDOWS_SOURCE;NT_VC11_DLLD;_DEBUG;STRICT;_WIN32_WINNT=0x502;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;NT;__ha_bridge;__SpaHBridge;INCLUDE_HOOPS_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\NT_VC11_DLLD\code\bin\ha_bridged.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\NT_VC11_DLLD\code\bin\</AssemblerListingLocation>
+      <ObjectFileName>.\NT_VC11_DLLD\code\bin\</ObjectFileName>
+      <ProgramDataBaseFileName>.\NT_VC11_DLLD\code\bin\</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;ACIS_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>hoopsd.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(A3DT)\NT_VC11_DLLD\code\bin\SpaHBridged.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HOOPS_INSTALL_DIR)\Dev_Tools\hoops_3dgs\lib\nt_i386_vc11;$(A3DT)\NT_VC11_DLLD\code\lib;$(A3DT)\thirdparty\lib\NT_VC11_DLLD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(A3DT)\NT_VC11_DLLD\code\bin\SpaHBridged.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(A3DT)\NT_VC11_DLLD\code\lib\SpaHBridged.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\NT_VC11_DLL\code\bin\ha_bridge.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>$(HOOPS_INSTALL_DIR)/Dev_Tools/hoops_3dgs/source;$(HOOPS_INSTALL_DIR)/Dev_Tools/hoops_3dgs/include;$(A3DT)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ANSI;NT;NT_VC11_DLL;NDEBUG;_WINDOWS;_WINDOWS_SOURCE;_WIN32_WINNT=0x502;_CRT_SECURE_NO_DEPRECATE;_WINNT_SOURCE;__ha_bridge;__SpaHBridge;INCLUDE_HOOPS_STANDALONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\NT_VC11_DLL\code\bin\ha_bridge.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\NT_VC11_DLL\code\bin\</AssemblerListingLocation>
+      <ObjectFileName>.\NT_VC11_DLL\code\bin\</ObjectFileName>
+      <ProgramDataBaseFileName>.\NT_VC11_DLL\code\bin\</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;ACIS_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>hoops.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(A3DT)\NT_VC11_DLL\code\bin\SpaHBridge.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(HOOPS_INSTALL_DIR)\Dev_Tools\hoops_3dgs\lib\nt_i386_vc11;$(A3DT)\NT_VC11_DLL\code\lib;$(A3DT)\thirdparty\lib\NT_VC11_DLL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(A3DT)\NT_VC11_DLL\code\bin\SpaHBridge.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(A3DT)\NT_VC11_DLL\code\lib\SpaHBridge.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="dcl_hoops.cpp" />
+    <ClCompile Include="eha_brid.cpp" />
+    <ClCompile Include="entity_converter.cpp" />
+    <ClCompile Include="entity_converter_asm.cpp" />
+    <ClCompile Include="ha_bridge.cpp" />
+    <ClCompile Include="ha_bridge_asm.cpp" />
+    <ClCompile Include="ha_map.cpp" />
+    <ClCompile Include="ha_map_asm.cpp" />
+    <ClCompile Include="ha_rend_context.cpp" />
+    <ClCompile Include="ha_rend_options.cpp" />
+    <ClCompile Include="ha_util.cpp" />
+    <ClCompile Include="ientityconverter.cpp" />
+    <ClCompile Include="direct_render_mesh_manger.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\dcl_hoops.h" />
+    <ClInclude Include="..\..\include\entity_converter.h" />
+    <ClInclude Include="..\..\include\ha_bridge.h" />
+    <ClInclude Include="..\..\include\ha_bridge_asm.h" />
+    <ClInclude Include="..\..\include\ha_bridge_internal.h" />
+    <ClInclude Include="..\..\include\ha_map.h" />
+    <ClInclude Include="..\..\include\ha_map_asm.h" />
+    <ClInclude Include="..\..\include\ha_point.h" />
+    <ClInclude Include="..\..\include\ha_rend_context.h" />
+    <ClInclude Include="..\..\include\ha_rend_options.h" />
+    <ClInclude Include="..\..\include\ha_util.h" />
+    <ClInclude Include="..\..\include\ientityconverter.h" />
+    <ClInclude Include="..\..\include\direct_render_mesh_manager.hxx" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

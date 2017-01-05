@@ -1,0 +1,594 @@
+/*******************************************************************/
+/*    Copyright (c) 1989-2015 by Spatial Corp.                     */
+/*    All rights reserved.                                         */
+/*    Protected by U.S. Patents 5,257,205; 5,351,196; 6,369,815;   */
+/*                              5,982,378; 6,462,738; 6,941,251    */
+/*    Protected by European Patents 0503642; 69220263.3            */
+/*    Protected by Hong Kong Patent 1008101A                       */
+/*******************************************************************/
+#ifdef NT
+#pragma warning( disable : 4786 )
+#pragma warning( disable : 4251 )
+#endif // NT
+
+// Added for hpia_64-
+#ifdef hp700
+#include <new.h>
+#endif
+
+#include "hps_map.h"
+#include "hps_map_asm.h"
+#include "hps_util.h"
+#include "body.hxx"
+#include "face.hxx"
+#include "edge.hxx"
+#include "vertex.hxx"
+#include "point.hxx"
+#include "wcs.hxx"
+#include "text.hxx"
+#include "rlt_util.hxx"
+#include "ga_api.hxx"
+#include "at_ent.hxx"
+#include "asm_assembly.hxx"
+#include "asm_model_ref.hxx"
+#include "entity_handle.hxx"
+#include "asm_model.hxx"
+#include "hps_bridge.err"
+
+LOCAL_PROC entity_handle* get_owner_handle( entity_handle* eh )
+{
+	entity_handle* owner = NULL;
+	if ( eh )
+	{
+		ENTITY* entity = eh->entity_ptr();
+		asm_model* model = eh->get_owning_model();
+		ENTITY* top_level = NULL;
+		api_get_owner( entity, top_level );
+		owner = model->get_entity_handle( top_level );
+	}
+	return owner;
+}
+
+void HPS_EHandleMap::AddMapping( HPS::Key key, entity_handle* eh, entity_handle* owner )
+{
+	ENTITY* entity = eh->entity_ptr();
+	// fang Aug 5 2004. entity should be registered in Hoops Map only if the entity is a Body, Face, Edge, Vertex, Apoint, WCS, Text_ent or Light
+	if ( is_ASM_ASSEMBLY( entity ) ||
+		 is_ASM_MODEL_REF( entity ) ||
+		 is_BODY( entity ) ||
+		 is_FACE( entity ) ||
+		 is_EDGE( entity ) ||
+		 is_VERTEX( entity ) ||
+		 is_APOINT( entity ) ||
+		 is_WCS( entity ) ||
+		 is_TEXT_ENT( entity ) ||
+		 IS_LIGHT( entity ) )
+	{
+		entity_handle *tl = 0;
+		if ( !owner )
+			tl = get_owner_handle( eh );
+		else
+			tl = owner;
+		if ( is_EDGE( entity ) )
+		{	// mgp (11/01/04): Is this a silhouette edge?
+			ATTRIB_GEN_NAME *attrib = NULL;
+			api_find_named_attribute( entity, "HPS_SilhouetteFace", attrib );
+
+			if ( attrib && attrib->identity( ATTRIB_GEN_ENTITY_LEVEL ) == ATTRIB_GEN_ENTITY_TYPE )
+			{
+				ATTRIB_GEN_ENTITY *att_ent = (ATTRIB_GEN_ENTITY*)attrib;
+				ENTITY            *face = att_ent->value();
+				if ( face && is_FACE( face ) )
+				{
+					asm_model* model = eh->get_owning_model();
+					entity_handle* fh = model->get_entity_handle( face );
+					AddMapping( key, fh, owner );
+					return;
+				}
+			}
+		}
+		m_Top_Maps[tl].AddMapping( key, eh );
+		m_HPS_to_ACIS[key] = eh;
+	}
+}
+
+void HPS_EHandleMap::DeleteMapping( HPS::Key key )
+{
+	m_HPS_to_ACIS.erase( key );
+}
+
+void HPS_EHandleMap::DeleteMapping( entity_handle* eh )
+{
+	entity_handle* tl = get_owner_handle( eh );
+	if ( eh == tl )
+	{	// Before using the [] operator test if the entity exists in that map.
+		T_ehandle_to_HPS_TL_EHandleMap_const_iterator tempConstIterator = m_Top_Maps.find( tl );
+		if ( tempConstIterator == m_Top_Maps.end() )
+			return;
+		T_ehandle_to_segment_list_iterator entity_to_segment_list_end = m_Top_Maps[tl].m_ACIS_to_HOOPS.end();
+		for ( T_ehandle_to_segment_list_iterator l = m_Top_Maps[tl].m_ACIS_to_HOOPS.begin(); l != entity_to_segment_list_end; ++l )
+		{
+			entity_handle *map_ent = (entity_handle*)( *l ).first;
+			T_segment_list_const_iterator end = m_Top_Maps[tl].m_ACIS_to_HOOPS[map_ent].end();
+			for ( T_segment_list_const_iterator p = m_Top_Maps[tl].m_ACIS_to_HOOPS[map_ent].begin(); p != end; ++p )
+			{
+				HPS::Key key = *p;
+				m_HPS_to_ACIS.erase( key );
+			}
+		}
+		m_Top_Maps.erase( eh );
+	} else
+	{	// fang Aug 5 2004. Fixed up top map. Before fixing, top map can't be cleared if the entity is absorbed into another entity
+		// if the entity is still in top level map, erase it
+		if ( ( m_Top_Maps.find( eh ) ) != m_Top_Maps.end() )
+			m_Top_Maps.erase( eh );
+		else
+		{
+			T_ehandle_to_HPS_TL_EHandleMap_const_iterator tempConstIterator = m_Top_Maps.find( tl );
+			if ( tempConstIterator != m_Top_Maps.end() )
+				m_Top_Maps[tl].DeleteMapping( eh );
+		}
+	}
+}
+
+void HPS_EHandleMap::DeleteMapping( HPS::Key key, entity_handle* eh )
+{
+	entity_handle* tl = get_owner_handle( eh );
+	if ( eh == tl )
+		m_Top_Maps.erase( eh );
+	else
+	{	// Before using the [] operator test if the entity exists in that map.
+		T_ehandle_to_HPS_TL_EHandleMap_const_iterator tempConstIterator = m_Top_Maps.find( tl );
+		if ( tempConstIterator == m_Top_Maps.end() )
+			return;
+		m_Top_Maps[tl].DeleteMapping( key, eh );
+	}
+	m_HPS_to_ACIS.erase( key );
+}
+
+HPS::Key HPS_EHandleMap::FindMapping( entity_handle* eh )
+{	// returns zero if entity not found
+	HPS::Key key = HPS_INVALID_KEY;
+	EXCEPTION_BEGIN
+		entity_handle *tl = 0;
+	EXCEPTION_TRY
+	{
+		tl = get_owner_handle( eh );
+		T_ehandle_to_HPS_TL_EHandleMap_const_iterator eh_to_HPS_TL_Map_const_iterator = m_Top_Maps.find( eh );
+		T_ehandle_to_HPS_TL_EHandleMap_const_iterator eh_to_HPS_TL_Map_const_iterator_end = m_Top_Maps.end();
+		if ( eh_to_HPS_TL_Map_const_iterator == eh_to_HPS_TL_Map_const_iterator_end )
+			return HPS_INVALID_KEY;
+		if ( m_Top_Maps.find( tl ) != m_Top_Maps.end() )
+			key = m_Top_Maps[tl].FindMapping( eh );
+		if ( !HPS_Is_Valid_Key( key ) )
+			key = m_Top_Maps[eh].FindMapping( eh );
+		if ( HPS_Is_Valid_Key( key ) && !HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )
+		{	// This should not be hit.  If it does we need to fix something.
+			// Please submit bug report.
+			sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+			// The key is invalid so remove it from the map
+		}
+	} EXCEPTION_CATCH_FALSE
+	{
+		DeleteMapping( key );
+		key = HPS_INVALID_KEY;
+	} EXCEPTION_END;
+	return key;
+}
+
+entity_handle* HPS_EHandleMap::FindMapping( HPS::Key key )
+{	// returns 0 if key not found
+	entity_handle* ent = NULL;
+	// First thing is make sure the key is still good
+	EXCEPTION_BEGIN;
+	EXCEPTION_TRY
+	{
+		if ( !HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )
+		{	// This should not be hit.  If it does we need to fix something.
+			// Please submit bug report.
+			sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+		}
+		if ( m_HPS_to_ACIS.find( key ) != m_HPS_to_ACIS.end() )
+			ent = m_HPS_to_ACIS[key];
+		else
+			ent = NULL;
+	} EXCEPTION_CATCH_FALSE
+	{
+		DeleteMapping( key );
+		ent = NULL;
+	} EXCEPTION_END;
+	return ent;
+}
+
+unsigned long HPS_EHandleMap::FindMapping( entity_handle* eh, HPS::Key* keys, unsigned long count )
+{	// returns number of keys found (for multiple mappings)
+	unsigned long num_keys_mapped_to_entity = 0;
+	EXCEPTION_BEGIN;
+	entity_handle* tl = 0;
+	HPS::Key key = HPS_INVALID_KEY;
+	EXCEPTION_TRY
+	{
+		tl = get_owner_handle( eh );
+		// Before using the [] operator test if the entity exists in that map.
+		T_ehandle_to_HPS_TL_EHandleMap_const_iterator tempConstIterator = m_Top_Maps.find( tl );
+		if ( tempConstIterator != m_Top_Maps.end() )
+		{
+			T_ehandle_to_segment_list_const_iterator tempConstIterator2 = m_Top_Maps[tl].m_ACIS_to_HOOPS.find( eh );
+			if ( tempConstIterator2 != m_Top_Maps[tl].m_ACIS_to_HOOPS.end() )
+			{
+				T_segment_list_const_iterator end = m_Top_Maps[tl].m_ACIS_to_HOOPS[eh].end();
+				T_segment_list_const_iterator p;
+				for ( p = m_Top_Maps[tl].m_ACIS_to_HOOPS[eh].begin(); p != end && num_keys_mapped_to_entity < count; ++p )
+				{
+					key = *p;
+					if ( HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )
+					{
+						keys[num_keys_mapped_to_entity] = key;
+						num_keys_mapped_to_entity++;
+					} else
+					{
+						// This should not be hit.  If it does we need to fix something. Please submit bug report.
+						sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+						DeleteMapping( key );
+					}
+				}
+			}
+		}
+		// Typically an ENTITY that isn't top level won't have any mappings. if you use m_Top_Maps[entity], 
+		// but sometimes they get absorbed into another entity.  So we need to check this case.
+		if ( eh != tl )
+		{	// Before using the [] operator test if the entity exists in that map.
+			T_ehandle_to_HPS_TL_EHandleMap_const_iterator tempConstIterator = m_Top_Maps.find( eh );
+			if ( tempConstIterator != m_Top_Maps.end() )
+			{	// fang Aug 5 2004. Fixed up top map. Before fixing, only part of the keys for an entity are returned
+				// which causes top map can not be cleared
+				T_ehandle_to_segment_list_const_iterator tesi;
+				int hat_size = (int)tempConstIterator->second.m_ACIS_to_HOOPS.size();
+				if ( hat_size > 0 )
+				{
+					for ( tesi = tempConstIterator->second.m_ACIS_to_HOOPS.begin(); tesi != tempConstIterator->second.m_ACIS_to_HOOPS.end(); tesi++ )
+					{
+						T_segment_list_const_iterator tsli;
+						for ( tsli = tesi->second.begin(); tsli != tesi->second.end(); ++tsli )
+						{
+							key = *tsli;
+							if ( HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )
+							{
+								keys[num_keys_mapped_to_entity] = key;
+								num_keys_mapped_to_entity++;
+							} else // This should not be hit.  If it does we need to fix something. Please submit bug report.
+								sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+						}
+					}
+				}
+			}
+		}
+	} EXCEPTION_CATCH_FALSE
+		DeleteMapping( key );
+	EXCEPTION_END;
+	return num_keys_mapped_to_entity;
+}
+
+unsigned long HPS_EHandleMap::FindNumMappings( entity_handle* eh )
+{	// returns number of keys found (for multiple mappings)
+	unsigned long num_keys_mapped_to_entity = 0;
+	entity_handle* tl = get_owner_handle( eh );
+	// Before using the [] operator test if the entity exists in that map.
+	T_ehandle_to_HPS_TL_EHandleMap_const_iterator tempConstIterator = m_Top_Maps.find( tl );
+	if ( tempConstIterator == m_Top_Maps.end() )
+		return 0;
+	num_keys_mapped_to_entity = m_Top_Maps[tl].NumSegments( eh );
+	// Typically an ENTITY that isn't top level won't have any mappings
+	// if you use m_Top_Maps[entity], but sometimes they get absorbed into another
+	// entity.  So we need to check this case.
+	if ( eh != tl )
+		num_keys_mapped_to_entity += m_Top_Maps[eh].NumSegments( eh );
+	return num_keys_mapped_to_entity;
+}
+
+int HPS_EHandleMap::HPS_Internal_Get_Map_Entries( void )
+{
+	int HPS_to_Acis_Count = -1;
+	int Top_Maps_Count = -1;
+	// count the entries in m_HPS_to_ACIS map
+	HPS_to_Acis_Count = (int)m_HPS_to_ACIS.size();
+	// count the entries in m_Top_Maps map
+	Top_Maps_Count = (int)m_Top_Maps.size();
+	return HPS_to_Acis_Count + Top_Maps_Count;
+}
+
+logical HPS_EHandleMap::HPS_Is_In_Top_Map( entity_handle* ent )
+{
+	if ( ( m_Top_Maps.find( ent ) ) != m_Top_Maps.end() )
+		return TRUE;
+	return FALSE;
+}
+
+void HPS_ModelMap::AddMapping( HPS::Key key, asm_model* model )
+{
+	m_HPS_to_ACIS[key] = model;
+}
+
+void HPS_ModelMap::DeleteMapping( HPS::Key key )
+{
+	m_HPS_to_ACIS.erase( key );
+}
+
+void HPS_ModelMap::DeleteMapping( asm_model* model )
+{
+	unsigned long num = FindNumMappings( model );
+	if ( num == 1 )
+	{
+		HPS::Key key = FindMapping( model );
+		m_HPS_to_ACIS.erase( key );
+	} else if ( num > 1 )
+	{
+		HPS::Key* keys = new HPS::Key[num];
+		unsigned long new_num = FindMapping( model, keys, num );
+		unsigned long i;
+		for ( i = 0; i < num; i++ )
+		{
+			HPS::Key this_key = keys[i];
+			m_HPS_to_ACIS.erase( this_key );
+		}
+		delete[] keys;
+	}
+}
+
+void HPS_ModelMap::DeleteMapping( HPS::Key key, asm_model* model )
+{
+	unsigned long num = FindNumMappings( model );
+	if ( num == 1 )
+	{
+		HPS::Key key = FindMapping( model );
+		m_HPS_to_ACIS.erase( key );
+	} else if ( num > 1 )
+	{
+		HPS::Key* keys = new HPS::Key[num];
+		unsigned long new_num = FindMapping( model, keys, num );
+		int key_found = FALSE;
+		unsigned long i;
+		for ( i = 0; !key_found && i < num; i++ )
+		{
+			HPS::Key this_key = keys[i];
+			if ( this_key == key )
+			{
+				m_HPS_to_ACIS.erase( this_key );
+				key_found = TRUE;
+			}
+		}
+		delete[] keys;
+	}
+}
+
+HPS::Key HPS_ModelMap::FindMapping( asm_model* model )
+{	// returns zero if entity not found
+	HPS::Key key = HPS_INVALID_KEY;
+	FindMapping( model, &key, 1 );
+	return key;
+}
+
+asm_model * HPS_ModelMap::FindMapping( HPS::Key key )
+{	// returns 0 if key not found
+	asm_model* model = NULL;
+	EXCEPTION_BEGIN;
+	EXCEPTION_TRY
+	{	// First thing is make sure the key is still good
+		if ( !HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )	// This should not be hit.  If it does we need to fix something. Please submit bug report.
+		sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+		if ( m_HPS_to_ACIS.find( key ) != m_HPS_to_ACIS.end() )
+			model = m_HPS_to_ACIS[key];
+		else
+			model = NULL;
+	} EXCEPTION_CATCH_FALSE
+	{
+		DeleteMapping( key );
+		model = NULL;
+	} EXCEPTION_END;
+	return model;
+}
+
+unsigned long HPS_ModelMap::FindMapping( asm_model* model, HPS::Key* keys, unsigned long count )
+{	// Passing a NULL model results in all keys being returned
+	unsigned long num_keys_mapped_to_model = 0;
+	EXCEPTION_BEGIN
+		HPS::Key key = HPS_INVALID_KEY;
+	EXCEPTION_TRY
+	{
+		STD map<HPS::Key, asm_model*>::iterator p;
+		for ( p = m_HPS_to_ACIS.begin(); p != m_HPS_to_ACIS.end() && num_keys_mapped_to_model < count; ++p )
+		{
+			if ( p->second == model || model == NULL )
+			{
+				key = p->first;
+				if ( HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )
+				{
+					if ( keys )
+						keys[num_keys_mapped_to_model] = key;
+					num_keys_mapped_to_model++;
+				} else	// This should not be hit.  If it does we need to fix something. Please submit bug report.
+					sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+			}
+		}
+
+	} EXCEPTION_CATCH_FALSE
+		DeleteMapping( key );
+	EXCEPTION_END;
+	return num_keys_mapped_to_model;
+}
+
+unsigned long HPS_ModelMap::FindNumMappings( asm_model* model )
+{
+	unsigned long num_keys_mapped_to_model = 0;
+	EXCEPTION_BEGIN
+		HPS::Key key = HPS_INVALID_KEY;
+	EXCEPTION_TRY
+	{
+		STD map<HPS::Key, asm_model*>::iterator p;
+		for ( p = m_HPS_to_ACIS.begin(); p != m_HPS_to_ACIS.end(); ++p )
+		{
+			if ( p->second == model )
+			{
+				key = p->first;
+				if ( HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )
+				{
+					num_keys_mapped_to_model++;
+				} else // This should not be hit.  If it does we need to fix something. Please submit bug report.
+					sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+			}
+		}
+	} EXCEPTION_CATCH_FALSE
+		DeleteMapping( key );
+	EXCEPTION_END;
+	return num_keys_mapped_to_model;
+}
+
+void HPS_ModelMap::Clear()
+{
+	m_HPS_to_ACIS.clear();
+}
+
+void HPS_CHandleMap::AddMapping( HPS::Key key, component_handle* comp )
+{
+	m_HPS_to_ACIS[key] = comp;
+}
+
+void HPS_CHandleMap::DeleteMapping( HPS::Key key )
+{
+	m_HPS_to_ACIS.erase( key );
+}
+
+void HPS_CHandleMap::DeleteMapping( component_handle* comp )
+{
+	unsigned long num = FindNumMappings( comp );
+	if ( num == 1 )
+	{
+		HPS::Key key = FindMapping( comp );
+		m_HPS_to_ACIS.erase( key );
+	} else if ( num > 1 )
+	{
+		HPS::Key* keys = new HPS::Key[num];
+		unsigned long new_num = FindMapping( comp, keys, num );
+		unsigned long i;
+		for ( i = 0; i < num; i++ )
+		{
+			HPS::Key this_key = keys[i];
+			m_HPS_to_ACIS.erase( this_key );
+		}
+		delete[] keys;
+	}
+}
+
+void HPS_CHandleMap::DeleteMapping( HPS::Key key, component_handle* comp )
+{
+	unsigned long num = FindNumMappings( comp );
+	if ( num == 1 )
+	{
+		HPS::Key key = FindMapping( comp );
+		m_HPS_to_ACIS.erase( key );
+	} else if ( num > 1 )
+	{
+		HPS::Key* keys = new HPS::Key[num];
+		unsigned long new_num = FindMapping( comp, keys, num );
+		int key_found = FALSE;
+		unsigned long i;
+		for ( i = 0; !key_found && i < num; i++ )
+		{
+			HPS::Key this_key = keys[i];
+			if ( this_key == key )
+			{
+				m_HPS_to_ACIS.erase( this_key );
+				key_found = TRUE;
+			}
+		}
+		delete[] keys;
+	}
+}
+
+HPS::Key HPS_CHandleMap::FindMapping( component_handle* comp )
+{	// returns zero if entity not found
+	HPS::Key key = HPS_INVALID_KEY;
+	FindMapping( comp, &key, 1 );
+	return key;
+}
+
+component_handle* HPS_CHandleMap::FindMapping( HPS::Key key )
+{	// returns 0 if key not found
+	component_handle* comp = NULL;
+	// First thing is make sure the key is still good
+	EXCEPTION_BEGIN;
+	EXCEPTION_TRY
+	{
+		if ( !HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) ) // This should not be hit.  If it does we need to fix something. Please submit bug report.
+		sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+		if ( m_HPS_to_ACIS.find( key ) != m_HPS_to_ACIS.end() )
+			comp = m_HPS_to_ACIS[key];
+		else
+			comp = NULL;
+	} EXCEPTION_CATCH_FALSE
+	{
+		DeleteMapping( key );
+		comp = NULL;
+	} EXCEPTION_END;
+	return comp;
+}
+
+unsigned long HPS_CHandleMap::FindMapping( component_handle* comp, HPS::Key* keys, unsigned long count )
+{	// Passing a NULL comp results in all keys being returned
+	unsigned long num_keys_mapped_to_comp = 0;
+	EXCEPTION_BEGIN
+		HPS::Key key = HPS_INVALID_KEY;
+	EXCEPTION_TRY
+	{
+		STD map<HPS::Key, component_handle*>::iterator p;
+		for ( p = m_HPS_to_ACIS.begin(); p != m_HPS_to_ACIS.end() && num_keys_mapped_to_comp < count; ++p )
+		{
+			if ( p->second == comp || comp == NULL )
+			{
+				key = p->first;
+				if ( HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )
+				{
+					if ( keys )
+						keys[num_keys_mapped_to_comp] = key;
+					num_keys_mapped_to_comp++;
+				} else // This should not be hit.  If it does we need to fix something. Please submit bug report.
+					sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+			}
+		}
+
+	} EXCEPTION_CATCH_FALSE
+		DeleteMapping( key );
+	EXCEPTION_END;
+	return num_keys_mapped_to_comp;
+}
+
+unsigned long HPS_CHandleMap::FindNumMappings( component_handle* comp )
+{
+	unsigned long num_keys_mapped_to_comp = 0;
+	EXCEPTION_BEGIN
+		HPS::Key key = HPS_INVALID_KEY;
+	EXCEPTION_TRY
+	{
+		STD map<HPS::Key, component_handle*>::iterator p;
+		for ( p = m_HPS_to_ACIS.begin(); p != m_HPS_to_ACIS.end(); ++p )
+		{
+			if ( p->second == comp )
+			{
+				key = p->first;
+				if ( HPS_Is_Valid_Segment_Key( HPS_Cast_SegmentKey( key ) ) )
+					num_keys_mapped_to_comp++;
+				else // This should not be hit.  If it does we need to fix something. Please submit bug report.
+					sys_error( HPS_MSG_SEGMENT_DOES_NOT_EXIST );
+			}
+		}
+
+	} EXCEPTION_CATCH_FALSE
+		DeleteMapping( key );
+	EXCEPTION_END;
+	return num_keys_mapped_to_comp;
+}
+
+void HPS_CHandleMap::Clear()
+{
+	m_HPS_to_ACIS.clear();
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .m-demo {
+            width: 600px;
+            height: 100px;
+            outline: 2px dashed;
+            margin: 20px auto;
+            background: rgba(0,255,0,0.5);
+        }
+        .m-demo pre {
+            transition: 2s;
+            width: 100px;
+            height: 100px;
+            left: 20px;
+            padding: 0;
+            line-height: 100px;
+            border-radius: 50%;
+            font-size: 20px;
+            color: snow;
+            text-align: center;
+            background: inherit;
+            transition-timing-function: ease-in-out;
+        }
+        .m-demo:hover pre{
+            background: red;
+            left: 500px;
+            color: #000;
+        }
+        .m-demo1 pre {transition-property: none;}
+        .m-demo2 pre {transition-property: all;}
+        .m-demo3 pre {transition-property: left;}
+        .m-demo4 pre {transition-property: left,color}
+    </style>
+</head>
+<body>
+    <div class="m-demo m-demo1">
+        <pre>none</pre>
+    </div>
+    <div class="m-demo m-demo2">
+        <pre>all</pre>
+    </div>
+    <div class="m-demo m-demo3">
+        <pre>left</pre>
+    </div>
+    <div class="m-demo m-demo4">
+        <pre>left,color</pre>
+    </div>
+</body>
+</html>

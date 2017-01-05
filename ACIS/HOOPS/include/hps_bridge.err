@@ -1,0 +1,30 @@
+// Error code definitions for module "spahpsbridge/src"
+
+#ifndef SPAHPSBRIDGE_HPS_BRIDGE_ERRMOD_INCLUDED
+#define SPAHPSBRIDGE_HPS_BRIDGE_ERRMOD_INCLUDED
+
+#include "errorbase.hxx"
+#include "errmsg.hxx"
+
+#ifdef _MSC_VER
+#ifdef __SpaHpsBridge
+extern __declspec(dllexport) message_module spahpsbridge_hps_bridge_errmod;
+
+#else
+extern __declspec(dllimport) message_module spahpsbridge_hps_bridge_errmod;
+
+#endif
+#else
+extern message_module spahpsbridge_hps_bridge_errmod;
+
+#endif
+#define HPS_MSG_SEGMENT_DOES_NOT_EXIST spahpsbridge_hps_bridge_errmod.message_code(0)
+#define HPS_MSG_ELLIPSE_OUT_OF_RANGE spahpsbridge_hps_bridge_errmod.message_code(1)
+#define HPS_MSG_PARAM_OUT_OF_RANGE spahpsbridge_hps_bridge_errmod.message_code(2)
+#define HPS_MSG_HOOPS_INTERNAL_ERROR spahpsbridge_hps_bridge_errmod.message_code(3)
+#define HPS_MSG_ASM_NOT_SUP spahpsbridge_hps_bridge_errmod.message_code(4)
+#define HPS_MSG_ASM_NOT_OVR spahpsbridge_hps_bridge_errmod.message_code(5)
+#define HPS_MSG_INVALID_LICENSE spahpsbridge_hps_bridge_errmod.message_code(6)
+#define HPS_MSG_ERROR spahpsbridge_hps_bridge_errmod.message_code(7)
+
+#endif /* SPAHPSBRIDGE_HPS_BRIDGE_ERRMOD_INCLUDED */

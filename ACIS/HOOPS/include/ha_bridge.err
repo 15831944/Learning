@@ -1,0 +1,29 @@
+// Error code definitions for module "spahbridge/src"
+
+#ifndef SPAHBRIDGE_HA_BRIDGE_ERRMOD_INCLUDED
+#define SPAHBRIDGE_HA_BRIDGE_ERRMOD_INCLUDED
+
+#include "errorbase.hxx"
+#include "errmsg.hxx"
+
+#ifdef _MSC_VER
+#ifdef __SpaHBridge
+extern __declspec(dllexport) message_module spahbridge_ha_bridge_errmod;
+
+#else
+extern __declspec(dllimport) message_module spahbridge_ha_bridge_errmod;
+
+#endif
+#else
+extern message_module spahbridge_ha_bridge_errmod;
+
+#endif
+#define HA_BRIDGE_SEGMENT_DOES_NOT_EXIST spahbridge_ha_bridge_errmod.message_code(0)
+#define HA_BRIDGE_ELLIPSE_OUT_OF_RANGE spahbridge_ha_bridge_errmod.message_code(1)
+#define HA_BRIDGE_PARAM_OUT_OF_RANGE spahbridge_ha_bridge_errmod.message_code(2)
+#define HA_BRIDGE_HOOPS_INTERNAL_ERROR spahbridge_ha_bridge_errmod.message_code(3)
+#define HA_BRIDGE_ASM_NOT_SUP spahbridge_ha_bridge_errmod.message_code(4)
+#define HA_BRIDGE_ASM_NOT_OVR spahbridge_ha_bridge_errmod.message_code(5)
+#define HA_BRIDGE_INVALID_LICENSE spahbridge_ha_bridge_errmod.message_code(6)
+
+#endif /* SPAHBRIDGE_HA_BRIDGE_ERRMOD_INCLUDED */

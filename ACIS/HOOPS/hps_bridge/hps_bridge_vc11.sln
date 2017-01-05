@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{0B791204-69FF-42BF-8C65-5888186A0B7C}") = "hps_bridge_vc11", "hps_bridge_vc11.vcxproj", "{1C51A8BE-928F-4E47-82B1-BAA3FB8747D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29F429B0-29BF-4000-83AC-F668F7DE48CF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5882E1D2-1C23-47EA-8D47-3F492ABA85B2}.Debug|Win32.Build.0 = Debug|Win32
+		{FC170B94-371B-49A2-AB63-EC8F3BA688CC}.Release|Win32.ActiveCfg = Release|Win32
+		{CA19034C-AC69-48B1-8F21-8F843073029C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{44786122-4FFF-4CEF-9B60-D9B2FF59333C}") = "HPS_Part", "hps_part_vc11_64.vcxproj", "{58F86AEA-8CFB-437C-82D8-9F6ED6E3FC57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D0D1E55-8589-4504-B2CC-254590CF5965}.Debug|x64.ActiveCfg = Debug|x64
+		{C46EF053-7F56-4AA8-A7F7-88FDBABB6FE0}.Debug|x64.Build.0 = Debug|x64
+		{F91316CB-188B-4261-8DCC-62E3D1665B26}.Release|x64.ActiveCfg = Release|x64
+		{93041AB1-6E39-44EF-878B-080BF7C48AFF}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

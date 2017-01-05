@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	.box {
+		width: 200px;
+	}
+	h3 {
+		margin: 0;
+		padding: 20px 0;
+		border-bottom: lightgrey solid 1.5px;
+	}
+	.list {
+		margin: 0;
+		padding: 0;
+		counter-reset: li;
+		list-style: none;
+	}
+	.list li {
+		line-height: 50px;
+		border-bottom: lightgrey dotted 1.5px;
+	}
+	.list li a:hover{
+		color: red;
+	}
+	.list li a::before {
+		content: counter(li)" ";
+		counter-increment: li;
+	}
+	.list li:nth-child(1) a::before,
+	.list li:nth-child(2) a::before,
+	.list li:nth-child(3) a::before {
+		color: red;
+	}
+	h3, a {
+		font-family: "黑体";
+		text-decoration: none;
+	}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<h3>图书畅销榜</h3>
+		<ol class="list">
+			<li><a href="#" title="当我足够好, 才会遇见你">当我足够好, 才会遇见你</a></li>
+			<li><a href="#" title="皮囊">皮囊</a></li>
+			<li><a href="#" title="李光耀论中国与世界">李光耀论中国与世界</a></li>
+			<li><a href="#" title="乖, 摸摸头">乖, 摸摸头</a></li>
+			<li><a href="#" title="男女内参">男女内参</a></li>
+		</ol>
+	</div>
+</body>
+</html>

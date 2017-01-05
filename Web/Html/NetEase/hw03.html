@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    form {
+        width: 400px;
+        font-family: "黑体";
+    }
+    form div {
+        width: 100%;
+        line-height: 50px;
+    }
+    textarea {
+        vertical-align: text-top;
+    }
+    input[type=submit] {
+        height: 30px;
+        width: 80px;
+        margin: 0 auto;
+        color: snow;
+        background: fuchsia;
+        border: none;
+    }
+    </style>
+</head>
+<body>
+    <form action="#">
+        <div>
+            <label for="img">头像</label>
+            <input type="file" id="img">
+        </div>
+        <div>
+            <label for="nickname">昵称</label>
+            <input type="text" id="nickname">
+        </div>
+        <div>
+            <label for="degree">学历</label>
+            <select name="degree" id="degree">
+                <option value="大专">大专</option>
+                <option value="本科">本科</option>
+            </select>
+        </div>
+        <div>
+            <label for="sex">性别</label>
+            <input type="radio" name="sex" value="male">男
+            <input type="radio" name="sex" value="female">女
+        </div>
+        <div>
+            <label>爱好</label>
+            <input type="checkbox" name="sex">电影
+            <input type="checkbox" name="sex">摄影
+            <input type="checkbox" name="sex">音乐
+            <input type="checkbox" name="sex">阅读
+        </div>
+        <div>
+            <label for="sign">签名</label>
+            <textarea rows="5" cols="40" id="sign"></textarea>
+        </div>
+        <div style="text-align: center">
+            <input type="submit">
+        </div>
+    </form>
+</body>
+</html>

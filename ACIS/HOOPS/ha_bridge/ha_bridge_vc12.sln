@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ha_bridge_vc11", "ha_bridge_vc12.vcxproj", "{193AAECF-8372-46B3-8F91-833AE90F2114}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{193AAECF-8372-46B3-8F91-833AE90F2114}.Debug|Win32.ActiveCfg = Debug|Win32
+		{193AAECF-8372-46B3-8F91-833AE90F2114}.Debug|Win32.Build.0 = Debug|Win32
+		{193AAECF-8372-46B3-8F91-833AE90F2114}.Release|Win32.ActiveCfg = Release|Win32
+		{193AAECF-8372-46B3-8F91-833AE90F2114}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

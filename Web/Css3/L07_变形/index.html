@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    .box {
+        width: 200px;
+        height: 200px;
+        margin: 50px auto;
+        background: rgba(255, 0, 0, 0.5);
+        perspective: 500px;
+        perspective-origin: center center;
+    }
+    .box .scale {
+        width: 200px;
+        height: 200px;
+        background: inherit;
+        transform: scale(0.5,0.8);
+    }
+    .box .scale3d {
+        width: 200px;
+        height: 200px;
+        background: inherit;
+        transform: scale3d(0.8,0.6,0.5);
+    }
+    .box .translate {
+        width: 200px;
+        height: 200px;
+        background: inherit;
+        transform: translate(50%,0);
+    }
+    .box .translate3d {
+        width: 200px;
+        height: 200px;
+        background: inherit;
+        transform: translate3d(0,0,-100px);
+    }
+    .box .rotate {
+        width: 200px;
+        height: 200px;
+        background:inherit;
+        transform: rotate(45deg);
+        transform-origin: center center;
+    }
+    .box .rotate3d {
+        width: 200px;
+        height: 200px;
+        background: inherit;
+        transform: rotate3d(1,1,1,45deg);
+        transform-origin: center center;
+    }
+    .box .skew{
+        width: 200px;
+        height: 200px;
+        background: inherit;
+        transform: skew(45deg);
+    }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <pre class="scale">scale</pre>
+    </div>
+    <div class="box">
+        <pre class="scale3d">scale3d</pre>
+    </div>
+    <div class="box">
+        <pre class="translate">translate</pre>
+    </div>
+    <div class="box">
+        <pre class="translate3d">translate3d</pre>
+    </div>
+    <div class="box">
+        <pre class="rotate">rotate</pre>
+    </div>
+    <div class="box">
+        <pre class="rotate3d">rotate3d</pre>
+    </div>
+    <div class="box">
+        <pre class="skew">skew</pre>
+    </div>
+</body>
+</html>
