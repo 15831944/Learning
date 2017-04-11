@@ -12,4 +12,4 @@ periods = 10;
 delta_time = time/periods; % period
 initAssetValue = 6.89;
 MAPrice = 6.8;
-simutimes = 10000;
+simutimes = 100;

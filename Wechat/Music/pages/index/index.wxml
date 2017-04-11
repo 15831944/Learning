@@ -1,0 +1,8 @@
+<button type="primary" bindtap="audioPlay">Audio播放</button>
+<button type="primary" bindtap="audioPause">Audio暂停</button>
+
+<button type="primary" bindtap="startRecord">开始录音</button>
+<button type="primary" bindtap="stopRecord">停止录音</button>
+<button type="primary" bindtap="voicePlay">Voice播放</button>
+<button type="primary" bindtap="voicePause">Voice暂停</button>
+<button type="primary" bindtap="voiceStop">Voice停止</button>
