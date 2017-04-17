@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view class="list-item" wx:for="{{items}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+  <view class="list-item-top">
+    <view>{{item.index}}</view>
+  </view>
+  <view class="list-item-bottom">
+    <view class="btn-delete">删除</view>
+    <view class="btn-setting">设置</view>
+  </view>
+  
+</view>

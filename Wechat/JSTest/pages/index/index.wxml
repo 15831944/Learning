@@ -1,0 +1,4 @@
+<!--pages/index/index.wxml-->
+<view wx:for="{{obj}}" wx:for-item="num">{{num}}</view>
+
+<button catchtap="test">点我</button>

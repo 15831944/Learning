@@ -1,0 +1,40 @@
+/**index.wxss**/
+.list-item {
+  position: relative;
+  width: 100%;
+  margin: 5rpx 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+}
+
+.list-item-top {
+  position: absolute;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  
+  width: 50%;
+  height: 100%;
+  margin: 0;
+  z-index: 999999;
+  background-color: red;
+}
+.list-item-bottom {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+  background-color: blue;
+}
+
+.btn-setting {
+  background-color: lightgrey;
+}
+.btn-delete {
+  background-color: red;
+}
